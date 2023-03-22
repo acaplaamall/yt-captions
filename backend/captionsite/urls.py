@@ -25,5 +25,6 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('captiongrab.urls')),
     path('api/', include(router.urls)),
+    path('transcript/new/', include('captiongrab.urls')),
 
 ]
