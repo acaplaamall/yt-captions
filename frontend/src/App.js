@@ -39,7 +39,7 @@ function App () {
       <div>Enter a Youtube link</div>
       <TextField id="outlined-basic" variant="outlined" value={url} onChange={(e) => setUrl(e.target.value)} />
       <Button variant="text" onClick={handleSubmit}>Submit</Button>
-      {currentVideoId && <YouTube
+      {/*currentVideoId && <YouTube
         videoId={currentVideoId}
         opts={{
           height: '390',
@@ -50,8 +50,8 @@ function App () {
           },
         }}
         onReady={(event) => { event.target.pauseVideo() }}>
-      </YouTube>}
-      {currentRaw && <div>hello {currentRaw.title} {currentRaw.text}</div>}
+      </YouTube>*/}
+      {currentRaw && <div>{currentRaw.text}</div>}
       <div>
         Saved raw transcripts
         {savedRaws.map((item, i) => {

@@ -1,6 +1,8 @@
 from django.shortcuts import render
 from django.http import JsonResponse, HttpResponse
 from rest_framework import viewsets
+
+from captiongrab.src.transcript import getTranscript
 from .serializers import RawTranscriptSerializer
 from .models import RawTranscript
 from django.views.decorators.csrf import csrf_exempt
@@ -23,4 +25,4 @@ class RawTranscriptView(viewsets.ModelViewSet):
 def receiveURL(request):
     if request.method == 'POST':
         url = request.data['url']
-        return JsonResponse({'title': url, 'text': 'body'})
+        return JsonResponse({'title': url, 'text': getTranscript(url)})
