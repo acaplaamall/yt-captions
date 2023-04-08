@@ -26,5 +26,7 @@ urlpatterns = [
     path('', include('captiongrab.urls')),
     path('api/', include(router.urls)),
     path('transcript/new/', include('captiongrab.urls')),
+    path('transcript/save/', include('captiongrab.urls')),
+    path('transcripts/', include('captiongrab.urls')),
 
 ]

@@ -7,5 +7,8 @@ class RawTranscript(models.Model):
     title = models.CharField(max_length=120)
     text = models.TextField()
 
+    class Meta:
+        unique_together = ["title", "text"]
+
     def _str_(self):
         return self.title

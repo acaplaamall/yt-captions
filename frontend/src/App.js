@@ -11,7 +11,6 @@ function App () {
   const [url, setUrl] = React.useState('')
 
   async function handleSubmit () {
-    console.log(url)
     const ytRegex = /(youtu.*be.*)\/(watch\?v=|embed\/|v|shorts|)(.*?((?=[&#?])|$))/gm;
     const res = ytRegex.exec(url);
     if (res !== null) {
@@ -33,6 +32,31 @@ function App () {
     }
   };
 
+  async function handleSave () {
+    await axios
+      .post('http://localhost:8000/transcript/save/', {
+        transcript: currentRaw,
+      })
+      .then(() => {
+        getRaw()
+      })
+      .catch((response) => {
+        alert(response.error)
+      });
+
+  };
+
+  async function getRaw () {
+    await axios
+      .get('http://localhost:8000/transcripts/').then((response) => {
+        setSavedRaws(response.data)
+        console.log(savedRaws)
+
+      })
+  }
+
+  React.useEffect(() => { }, [savedRaws])
+
   return (
     <div>
       <div>https://www.youtube.com/watch?v=jPluvSrEnLU</div>
@@ -51,12 +75,17 @@ function App () {
         }}
         onReady={(event) => { event.target.pauseVideo() }}>
       </YouTube>*/}
-      {currentRaw && <div>{currentRaw.text}</div>}
+      {currentRaw &&
+        <div>
+          <div>{currentRaw.text}</div>
+          <Button onClick={handleSave}>Save</Button>
+        </div>
+      }
       <div>
         Saved raw transcripts
         {savedRaws.map((item, i) => {
           return <div key={item.id}>
-            <div>{item.title}</div>
+            <div>{item.fields.title}</div>
           </div>
         })}
       </div>
