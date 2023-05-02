@@ -26,15 +26,17 @@ class RawTranscriptView(viewsets.ModelViewSet):
 def receiveURL(request):
     if request.method == 'POST':
         url = request.data['url']
-        return JsonResponse({'title': url, 'text': getTranscript(url)})
+        return JsonResponse({'text': getTimestampedTranscript(url), 'title': getTitle(url)})
 
 
 @csrf_exempt
 @api_view(['POST'])
 def saveRaw(request):
     if request.method == 'POST':
-        transcript = request.data['transcript']
-        obj = CreateTranscript(transcript)
+        url = request.data['url']
+        obj = CreateTranscript(
+            {'title': getTitle(url), 'vidId': url, 'transcript': getRawTranscript(url)})
+
         if obj.is_valid():
             obj.save()
             return JsonResponse({'status': 'ok'})
@@ -53,8 +55,21 @@ def getTranscripts(request):
 
 @csrf_exempt
 @api_view(['GET'])
-def getTranscripts(request):
-    if request.method == 'DELETE':
-        request.data['id']
+def searchTranscripts(request):
+    if request.method == 'GET':
+        qs = RawTranscript.objects.all()
         qs_json = serializers.serialize('json', qs)
         return HttpResponse(qs_json, content_type='application/json')
+
+
+@csrf_exempt
+@api_view(['DELETE'])
+def deleteTranscript(request, id):
+    if request.method == 'DELETE':
+        currId = int(id)
+        try:
+            tr = RawTranscript.objects.get(id=currId)
+        except RawTranscript.DoesNotExist:
+            return JsonResponse({'status': 'error'})
+        tr.delete()
+        return JsonResponse({'status': 'ok'})

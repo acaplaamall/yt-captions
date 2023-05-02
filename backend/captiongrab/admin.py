@@ -5,7 +5,7 @@ from .models import RawTranscript
 
 
 class RawTranscriptAdmin(admin.ModelAdmin):
-    list_display = ('title', 'text')
+    list_display = ('title', 'vidId', 'transcript')
 
 # Register your models here.
 

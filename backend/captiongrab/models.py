@@ -5,10 +5,11 @@ from django.db import models
 
 class RawTranscript(models.Model):
     title = models.CharField(max_length=120)
-    text = models.TextField()
+    vidId = models.CharField(max_length=120)
+    transcript = models.TextField()
 
     class Meta:
-        unique_together = ["title", "text"]
+        unique_together = ["title", "vidId"]
 
     def _str_(self):
         return self.title

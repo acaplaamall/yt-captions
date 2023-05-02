@@ -28,5 +28,9 @@ urlpatterns = [
     path('transcript/new/', include('captiongrab.urls')),
     path('transcript/save/', include('captiongrab.urls')),
     path('transcripts/', include('captiongrab.urls')),
+    path('transcripts/delete/<int:id>',
+         include('captiongrab.urls')),
+    path('transcripts/search/<slug:keyword>',
+         include('captiongrab.urls')),
 
 ]
