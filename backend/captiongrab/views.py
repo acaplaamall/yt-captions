@@ -55,9 +55,11 @@ def getTranscripts(request):
 
 @csrf_exempt
 @api_view(['GET'])
-def searchTranscripts(request):
+def searchTranscripts(request, keyword):
     if request.method == 'GET':
-        qs = RawTranscript.objects.all()
+        qs = RawTranscript.objects.filter(
+            transcript__contains=keyword) | RawTranscript.objects.filter(
+            title__contains=keyword)
         qs_json = serializers.serialize('json', qs)
         return HttpResponse(qs_json, content_type='application/json')
 

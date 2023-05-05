@@ -7,6 +7,8 @@ import TranscriptSearch from './TranscriptSearch'
 
 function App () {
   const [vidMode, setVidMode] = React.useState(true);
+  const [currentVideoId, setCurrentVideoId] = React.useState(null);
+  const [currentRaw, setCurrentRaw] = React.useState(null);
 
   return (
     <div>
@@ -22,7 +24,16 @@ function App () {
       </div>
 
       <div className='main-element'>
-        {vidMode ? <VideoPlayer /> : <TranscriptSearch setVidMode={setVidMode} />}
+        {vidMode ?
+          <VideoPlayer currentVideoId={currentVideoId}
+            setCurrentVideoId={setCurrentVideoId}
+            currentRaw={currentRaw}
+            setCurrentRaw={setCurrentRaw} /> :
+          <TranscriptSearch currentRaw={currentRaw}
+            setCurrentRaw={setCurrentRaw}
+            currentVideoId={currentVideoId}
+            setCurrentVideoId={setCurrentVideoId}
+            setVidMode={setVidMode} />}
       </div>
     </div >
   );

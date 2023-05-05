@@ -13,9 +13,7 @@ import CircularProgress from '@mui/material/CircularProgress';
 import Search from './Search';
 import ExportPopup from './ExportPopup';
 
-function VideoPlayer () {
-    const [currentRaw, setCurrentRaw] = React.useState(null);
-    const [currentVideoId, setCurrentVideoId] = React.useState(null);
+function VideoPlayer ({ currentVideoId, setCurrentVideoId, currentRaw, setCurrentRaw }) {
     const [savedRaws, setSavedRaws] = React.useState([]);
     const [backdrop, setBackdrop] = React.useState(false)
     const [urlTextfield, setUrlTextfield] = React.useState('')
@@ -38,8 +36,9 @@ function VideoPlayer () {
                 url: url,
             })
             .then((response) => {
-                setCurrentVideoId(url)
                 setCurrentRaw(response.data)
+            }).then(() => {
+                setCurrentVideoId(url)
             }).then(() => {
                 setBackdrop(false)
             })
@@ -81,7 +80,10 @@ function VideoPlayer () {
     }
 
     React.useEffect(() => { }, [savedRaws])
-    React.useEffect(() => { getRaws() }, [])
+    React.useEffect(() => {
+        currentRaw == null && currentVideoId != null && fetchTranscript(currentVideoId);
+        getRaws()
+    }, [])
 
     return (
         <div>
@@ -95,7 +97,7 @@ function VideoPlayer () {
             <ExportPopup isOpen={exportOpen} setOpen={setExportOpen} currentRaw={currentRaw}></ExportPopup>
             <Search title={"Caption Transcriber"} input={urlTextfield} placeholder={"Paste a YouTube link"} setInput={setUrlTextfield} handleSubmit={handleLinkSubmit}></Search>
             {
-                currentVideoId &&
+                currentRaw &&
                 <div className='video-display'>
                     <YouTube
                         videoId={currentVideoId}
