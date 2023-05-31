@@ -1,13 +1,9 @@
 # yt-captions
 
-BASIC
-- Given a video, get the captions (or auto captions) for it and display as a transcript
+A tool to extract the captions from a Youtube video. React and Django.
 
-INTERMEDIATE
-- Have options to save the transcripts (or parts of them)
-- Different language features (+ translate?)
-
-ADVANCED
-- Search saved transcripts for keywords
-- Automatically format this transcript to be nice
-
+Key Features
+- Ability to save transcripts and quickly access them and the video they are tied to. Also can delete saved transcripts.
+- Automatically translates videos in foreign languages to English, even if English captions or auto-translate functionalities are not available on the original video.
+- Ability to export the transcripts to Word or txt format.
+- Ability to search both the active transcript and the stored transcript for instances of a keyword.
